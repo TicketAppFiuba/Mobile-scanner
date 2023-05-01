@@ -28,7 +28,7 @@ export default function Search({ navigation }) {
         getData()
         .then((token) => {
 
-          fetch("https://dbe5-201-212-239-28.ngrok-free.app/authorizer/events", {
+          fetch("https://71a7-201-212-239-28.ngrok-free.app/authorizer/events", {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -70,9 +70,12 @@ export default function Search({ navigation }) {
                     {events.map((event) => {
                         return (
                             <TouchableOpacity style={styles.eventHeader} key={event.id} onPress={()=>{
-                                navigation.navigate('Scan', {eventId: event.id})
+                                navigation.navigate('Scan', {
+                                    eventId: event.id,
+                                    eventName: event.title
+                                })
                             }}>
-                                <Text style={styles.eventTitle}>{event.title}</Text>
+                                <Text style={styles.eventTitle}>{event.title}</Text> 
                                 <Text style={styles.eventDate}>{GetDayOfWeek(event.date)}</Text>
                             </TouchableOpacity>
                         )
