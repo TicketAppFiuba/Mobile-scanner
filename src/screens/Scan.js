@@ -119,7 +119,7 @@ export default function App({route, navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 20, paddingTop: 30, fontWeight: 'bold'}}>Escanear QR de {eventName}</Text>
+      <Text style={{fontSize: 20, paddingTop: 30, fontWeight: 'bold', textAlign: 'center'}}>Escanear QR de {eventName}</Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
