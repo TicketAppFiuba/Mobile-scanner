@@ -18,7 +18,7 @@ export default function ScanFailModal({ isVisible, closeModal, reason }) {
     <Modal visible={visible} transparent>
       <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}>
         <View style={{ backgroundColor: 'red', padding: 20, borderRadius: 10 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', marginBottom: 10 }}>Entrada no escaneada con éxito</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', marginBottom: 10 }}>Error al escanear entrada</Text>
           <View style={{ marginBottom: 10 }}>
             <Text style={{ color: 'white', fontWeight: 'bold' }}>Detalles:</Text>
             <Text style={{ color: 'white' }}>{reason}</Text>
