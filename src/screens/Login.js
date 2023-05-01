@@ -25,37 +25,27 @@ export default function App({navigation}) {
 
   useEffect(() => {
     if (response?.type === "success") {
-      console.log("REsponse", response)
       setToken(response.authentication.accessToken);
       getJwt();
     }
   }, [response, token]);
 
   const getJwt = async () => {
-
-    let url = `https://dbe5-201-212-239-28.ngrok-free.app/authorizer/login?token=${token}`
+    if (!token) return;
+    let url = `https://71a7-201-212-239-28.ngrok-free.app/authorizer/login?token=${token}`
     console.log(url)
-    try {
-      const response = await fetch(url,
-        {
-        method: 'GET',
-      }
-      )
-      .then((response) => response.json())
-      .then((jwt) => {
-          console.log("JWT:", jwt)
-          storeData(jwt.access_token)
-          .then((data)=>{
-              navigation.navigate('Home');
-          })
-      })
-      .catch((error) => {
-          console.error("Aca1", error);
-      })
-    } catch (error) {
-      // Add your own error handler here
-      console.error("Aca2", error);
-    }
+    fetch(url)
+    .then((response) => response.json())
+    .then((jwt) => {
+        storeData(jwt.access_token)
+        .then((data)=>{
+            navigation.navigate('Home');
+        })
+    })
+    .catch((error) => {
+        console.error(error);
+    })
+    
   };
 
   return (
