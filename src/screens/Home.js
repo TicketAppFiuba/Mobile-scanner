@@ -28,7 +28,7 @@ export default function Search({ navigation }) {
         getData()
         .then((token) => {
 
-          fetch("https://71a7-201-212-239-28.ngrok-free.app/authorizer/events", {
+          fetch("https://0f87-201-212-239-28.ngrok-free.app/authorizer/events", {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -72,7 +72,9 @@ export default function Search({ navigation }) {
                             <TouchableOpacity style={styles.eventHeader} key={event.id} onPress={()=>{
                                 navigation.navigate('Scan', {
                                     eventId: event.id,
-                                    eventName: event.title
+                                    eventName: event.title,
+                                    eventCapacity: event.capacity,
+                                    eventVacancies: event.vacancies
                                 })
                             }}>
                                 <Text style={styles.eventTitle}>{event.title}</Text> 
