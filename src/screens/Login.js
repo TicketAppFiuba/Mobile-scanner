@@ -32,7 +32,7 @@ export default function App({navigation}) {
 
   const getJwt = async () => {
     if (!token) return;
-    let url = `https://71a7-201-212-239-28.ngrok-free.app/authorizer/login?token=${token}`
+    let url = `https://0f87-201-212-239-28.ngrok-free.app/authorizer/login?token=${token}`
     console.log(url)
     fetch(url)
     .then((response) => response.json())
@@ -50,8 +50,15 @@ export default function App({navigation}) {
 
   return (
     <View style={styles.container}>
+        <Text style={{
+            fontWeight: 'bold',
+            fontSize: 46,
+            paddingBottom: 40,
+        }}>
+            𝓣𝓲𝓬𝓴𝓮𝓽 𝓐𝓹𝓹
+        </Text>
         <Button
-          title="Sign in with Google"
+          title="Ingresar con Google"
           disabled={!request}
           onPress={() => {
             promptAsync();
