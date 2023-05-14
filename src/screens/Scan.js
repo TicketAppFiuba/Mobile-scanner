@@ -18,7 +18,7 @@ const getData = async () => {
 }
 
 export default function App({route, navigation}) {
-  const { eventId, eventName } = route.params;
+  const { eventId, eventName, eventCapacity, eventVacancies } = route.params;
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -77,7 +77,7 @@ export default function App({route, navigation}) {
     const now = Date.now();
 
     if (now - lastScanTime > 5000) {
-      fetch("https://71a7-201-212-239-28.ngrok-free.app/authorizer/ticket",
+      fetch("https://0f87-201-212-239-28.ngrok-free.app/authorizer/ticket",
       {
         method: 'POST',
         headers: {
@@ -130,6 +130,11 @@ export default function App({route, navigation}) {
         </View>
         <ScanSuccessModal isVisible={showSuccessModal} closeModal={handleCloseModal} data={scannedData} setScanned={setScanned}/>
         <ScanFailModal isVisible={showFailModal} closeModal={handleCloseModal} reason={failReason} />
+        {/* Bottom bar with info about capacity of the event */}
+        <View style={{ position: 'absolute', bottom: 0, left: 0, paddingBottom: 30}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'left'}}> Capacidad: {eventCapacity}</Text>
+          <Text style={{fontSize: 20, fontWeight: 'bold', textAlign: 'left'}}> Entradas Escaneadas: {eventCapacity - eventVacancies}</Text>
+        </View>
     </View>
   );
 }
