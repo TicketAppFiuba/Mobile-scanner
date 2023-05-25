@@ -30,9 +30,12 @@ export default function App({navigation}) {
     }
   }, [response, token]);
 
+
+  
+
   const getJwt = async () => {
     if (!token) return;
-    let url = `https://0f87-201-212-239-28.ngrok-free.app/authorizer/login?token=${token}`
+    let url = `https://b697-181-29-197-107.sa.ngrok.io/authorizer/login?token=${token}`
     console.log(url)
     fetch(url)
     .then((response) => response.json())
