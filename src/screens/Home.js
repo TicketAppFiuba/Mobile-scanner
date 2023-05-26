@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ScrollView, View, Text, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, RefreshControl } from 'react-native';
 import GetDayOfWeek from '../libs/DayOfWeek';
+import EventCard from '../components/EventCard';
 
 const getData = async () => {
   try {
@@ -69,21 +70,15 @@ export default function Search({ navigation }) {
           {hasEvents ? <Text style={styles.noEventsText}>No hay eventos</Text> : null}
           {events.map((event) => {
             return (
-              <TouchableOpacity
-                style={styles.eventHeader}
+              <EventCard
                 key={event.id}
-                onPress={() => {
-                  navigation.navigate('Statistics', {
-                    eventId: event.id,
-                    eventName: event.title,
-                    eventCapacity: event.capacity,
-                    eventVacancies: event.vacancies,
-                  });
-                }}
-              >
-                <Text style={styles.eventTitle}>{event.title}</Text>
-                <Text style={styles.eventDate}>{GetDayOfWeek(event.date)}</Text>
-              </TouchableOpacity>
+                event_id={event.id}
+                title={event.title}
+                capacity={event.capacity}
+                vacancies={event.vacancies}
+                image={event.link}
+                navigation={navigation}
+              />
             );
           })}
         </ScrollView>
@@ -119,23 +114,10 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     backgroundColor: '#fff',
+    width: '100%',
   },
   scrollViewContent: {
     padding: 20,
-  },
-  eventHeader: {
-    backgroundColor: '#fff',
-    flex: 1,
-    alignItems: 'center',
-    padding: 10,
-  },
-  eventTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  eventDate: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   noEventsText: {
     paddingTop: 20,
