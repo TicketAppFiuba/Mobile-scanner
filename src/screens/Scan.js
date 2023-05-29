@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import ScanSuccessModal from '../components/ScanSuccessModal';
 import ScanFailModal from '../components/ScanFailModal';
@@ -77,7 +77,7 @@ export default function App({route, navigation}) {
     const now = Date.now();
 
     if (now - lastScanTime > 5000) {
-      fetch("https://e04b-181-29-197-107.sa.ngrok.io/authorizer/ticket",
+      fetch("https://9046-181-29-197-107.sa.ngrok.io/authorizer/ticket",
       {
         method: 'POST',
         headers: {
@@ -118,7 +118,9 @@ export default function App({route, navigation}) {
   }
 
   return (
+    
     <View style={styles.container}>
+      
       <Text style={{fontSize: 20, paddingTop: 30, fontWeight: 'bold', textAlign: 'center'}}>Escanear QR de {eventName}</Text>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -130,6 +132,16 @@ export default function App({route, navigation}) {
         </View>
         <ScanSuccessModal isVisible={showSuccessModal} closeModal={handleCloseModal} data={scannedData} setScanned={setScanned}/>
         <ScanFailModal isVisible={showFailModal} closeModal={handleCloseModal} reason={failReason} />
+        <View style={styles.buttonContainer}>
+      <Button title="Ver estadisticas del evento" key={eventId} onPress={()=>{
+      navigation.navigate('Statistics', {
+        eventId: eventId,
+        eventName: eventName,
+        eventCapacity: eventCapacity,
+        eventVacancies: eventVacancies,
+      });
+      }} />
+  </View>
     </View>
   );
 }
@@ -140,6 +152,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+
+    buttonContainer: {
+      width: '110%',
+      marginTop: 20,
+      paddingHorizontal: 20,
+    },
+   
 
 }); 

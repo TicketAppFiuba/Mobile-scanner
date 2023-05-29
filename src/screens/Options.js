@@ -4,7 +4,9 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { Button } from "react-native";
 import AttendanceChart from '../components/AttendanceChart';
 import ChartExample from '../components/ChartExample';
-import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import ChartExample_2 from '../components/ChartExample_2';
+import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity, RefreshControl } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import GetDayOfWeek from '../libs/DayOfWeek';
 
 const getData = async () => {
@@ -19,6 +21,7 @@ const getData = async () => {
 };
 
 export default function Options({ route, navigation }) {
+  const [refreshing, setRefreshing] = useState(false);
   const { eventId, eventName, eventCapacity, eventVacancies } = route.params;
   const [hasEvents, setHasEvents] = useState(false);
   const [events, setEvents] = useState([]);
@@ -28,7 +31,7 @@ export default function Options({ route, navigation }) {
   const fetchData = async () => {
     try {
       const token = await getData();
-      const response = await fetch(`https://e04b-181-29-197-107.sa.ngrok.io/authorizer/event/statistics?event_id=${eventId}`, {
+      const response = await fetch(`https://9046-181-29-197-107.sa.ngrok.io/authorizer/event/statistics?event_id=${eventId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +47,9 @@ export default function Options({ route, navigation }) {
       } else {
         console.error('Error en la respuesta del servidor:', response.status);
       }
+      setRefreshing(false);
     } catch (error) {
+      setRefreshing(false);
       console.error('Error al realizar la solicitud:', error);
     }
   };
@@ -52,10 +57,9 @@ export default function Options({ route, navigation }) {
   useEffect(() => {
     fetchData();
 
-    // Set up an interval for automatic refresh every 30 seconds
     const interval = setInterval(() => {
       fetchData();
-    }, 30000);
+    }, 10000); // Actualizar cada 10 segundos
 
     // Clear the interval when the component is unmounted
     return () => {
@@ -63,30 +67,42 @@ export default function Options({ route, navigation }) {
     };
   }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
   return (
     <View style={{ flex: 1, padding: 10 }}>
-      <Text style={[styles.headerText, styles.centerText]}>{eventName}</Text>
+   <Text style={[styles.headerText, styles.centerText]}>{eventName}</Text>
       <Text style={[styles.headerText]}>Ingresos por minutos</Text>
-      {isLoading ? (
-        <LoadingSpinner /> // Mostrar el indicador de carga mientras se espera
+      {isLoading || datos.distribution_per_hour.length === 0 ? (
+        <View style={{ flex: 1 }}>
+          <ChartExample_2 />
+        </View>
       ) : (
         <ChartExample datos={datos} /> // Renderizar el gráfico después de recibir los datos
       )}
- 
+
       <Text style={[styles.headerText]}>Asistencia</Text>
       {isLoading ? (
         <LoadingSpinner /> // Mostrar el indicador de carga mientras se espera
       ) : (
         <AttendanceChart style={{ width: '100%' }} datos={datos} /> // Renderizar el gráfico después de recibir los datos
       )}
-      <Button title="Escanear entradas" key={eventId} onPress={()=>{
-        navigation.navigate('Scan', {
-          eventId: eventId,
-          eventName: eventName,
-          eventCapacity: eventCapacity,
-          eventVacancies: eventVacancies 
-        })
-      }} />
+      <Button
+        title="Escanear entradas"
+        key={eventId}
+        onPress={() => {
+          navigation.navigate('Scan', {
+            eventId: eventId,
+            eventName: eventName,
+            eventCapacity: eventCapacity,
+            eventVacancies: eventVacancies
+          })
+        }}
+      />
     </View>
   );
 }
@@ -141,5 +157,13 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     fontSize: 20,
     fontWeight: 'bold'
-  }
+  },
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#fff',
+    width: '100%',
+  },
+  scrollViewContent: {
+    padding: 20,
+  },
 });

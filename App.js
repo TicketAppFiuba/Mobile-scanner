@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Login from './src/screens/Login';
 import Home from './src/screens/Home';
 import Scan from './src/screens/Scan';
+
 import Option from './src/screens/Options';
 
 
@@ -19,7 +20,7 @@ export default function App() {
                 <Stack.Navigator>
 
                   <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
-                  <Stack.Screen name="Scan" component={Scan} />
+                  <Stack.Screen name="Scan" component={Scan}  options={{headerShown: false}} />
                   <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
                   <Stack.Screen name="Statistics" component={Option} />
 

@@ -27,7 +27,7 @@ export default function Search({ navigation }) {
     getData()
       .then((token) => {
         console.log('Este es e token = >',token)
-        fetch('https://e04b-181-29-197-107.sa.ngrok.io/authorizer/events', {
+        fetch('https://9046-181-29-197-107.sa.ngrok.io/authorizer/events', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
