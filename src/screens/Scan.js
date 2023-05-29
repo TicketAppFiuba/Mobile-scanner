@@ -77,7 +77,7 @@ export default function App({route, navigation}) {
     const now = Date.now();
 
     if (now - lastScanTime > 5000) {
-      fetch("https://b642-201-212-239-28.ngrok-free.app/authorizer/ticket",
+      fetch("https://e04b-181-29-197-107.sa.ngrok.io/authorizer/ticket",
       {
         method: 'POST',
         headers: {

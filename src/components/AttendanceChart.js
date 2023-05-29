@@ -4,10 +4,13 @@ import { PieChart } from 'react-native-chart-kit';
 import { Bar } from 'react-chartjs-2';
 
 const AttendanceChart =  (datos) => {
+
+  let population_1 = datos.datos.attendance_date ? datos.datos.attendance_date.attendances : 0;
+  let population__2 = datos.datos.attendance_date ? datos.datos.attendance_date.availability : datos.datos.reservation_date.capacity;
   
   const data = [
-    { name: 'Asistentes', population: datos.datos.reservation_date.vacancies, color: '#FF6347', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Ausentes', population: datos.datos.reservation_date.occupancy, color: '#1E90FF', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Asistentes',population: population_1, color: '#FF6347', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Ausentes',  population: population__2, color: '#1E90FF', legendFontColor: '#7F7F7F', legendFontSize: 15 },
   ];
 
   return (

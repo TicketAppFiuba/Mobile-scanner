@@ -28,7 +28,7 @@ export default function Options({ route, navigation }) {
   const fetchData = async () => {
     try {
       const token = await getData();
-      const response = await fetch(`https://b642-201-212-239-28.ngrok-free.app/authorizer/event/statistics?event_id=${eventId}`, {
+      const response = await fetch(`https://e04b-181-29-197-107.sa.ngrok.io/authorizer/event/statistics?event_id=${eventId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
