@@ -77,7 +77,7 @@ export default function App({route, navigation}) {
     const now = Date.now();
 
     if (now - lastScanTime > 5000) {
-      fetch("https://9046-181-29-197-107.sa.ngrok.io/authorizer/ticket",
+      fetch("https://backend-ticketapp.onrender.com/authorizer/ticket",
       {
         method: 'POST',
         headers: {

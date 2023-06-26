@@ -12,7 +12,7 @@ const ChartExample_2 = () => {
 
   return (
     <View style={{ flex: 1 }}>
-        <Text style={{fontSize: 15, paddingTop: 30, fontWeight: 'bold', textAlign: 'center'}}>Realize un escaneo para ver datos</Text>
+        <Text style={{fontSize: 15, paddingTop: 30, fontWeight: 'bold', textAlign: 'center'}}>Realice un escaneo para ver datos</Text>
         <LoadingSpinner />
      
     </View>
